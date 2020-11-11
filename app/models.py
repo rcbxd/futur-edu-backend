@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 
 class Card(models.Model):
     name = models.CharField(max_length=200)
+    id_name = models.CharField(max_length=32, unique=True, default="")
     description = models.CharField(default="", max_length=1000)
     prerequisites = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
@@ -16,7 +18,7 @@ class Card(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
-    description = models.CharField(default="", max_length=1000)
+    id_name = models.CharField(max_length=32, unique=True, default="")
     content = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
 
