@@ -15,7 +15,8 @@ class Category(models.Model):
 class Card(models.Model):
     name = models.CharField(max_length=200)
     id_name = models.CharField(max_length=32, unique=True, default="")
-    prerequisites = models.CharField(default="", max_length=1000)
+    prerequisites = models.CharField(default="", max_length=1000,blank=True)
+    description = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(
         Category, default=None, on_delete=models.CASCADE)

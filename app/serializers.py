@@ -42,15 +42,18 @@ class TopicSerializer(serializers.ModelSerializer):
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
-        fields = ['id', 'name', 'description', 'prerequisites']
+        fields = ['id', 'id_name', 'name', 'description', 'category', 'prerequisites']
 
     def create(self, validated_data):
         return Card.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+        instance.id_name = validated_data.get('id_name', instance.id_name)
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get(
             'description', instance.description)
+        instance.category = validated_data.get(
+            'category', instance.category)
         instance.prerequisites = validated_data.get(
             'prerequisites', instance.prerequisites)
         instance.save()
