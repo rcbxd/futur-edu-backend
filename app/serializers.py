@@ -24,7 +24,7 @@ class TopicTakenSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['name', 'description', 'content', 'created', 'id_name']
+        fields = ['name', 'content', 'created', 'id_name']
 
     def create(self, validated_data):
         return Topic.objects.create(**validated_data)
@@ -62,6 +62,7 @@ class CardSerializer(serializers.ModelSerializer):
 
 class CategoryDetailSerializer(serializers.ModelSerializer):
     card_set = CardSerializer(many=True)
+    topic_set = TopicSerializer(many=True)
 
     class Meta:
         model = Category
