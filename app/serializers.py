@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Card, Topic, TopicTaken
+from .models import Card, Topic, TopicTaken, Category
 from django.contrib.auth.models import User
 
 
@@ -24,7 +24,7 @@ class TopicTakenSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['id', 'name', 'description', 'content', 'created']
+        fields = ['name', 'description', 'content', 'created', 'id_name']
 
     def create(self, validated_data):
         return Topic.objects.create(**validated_data)
@@ -35,6 +35,7 @@ class TopicSerializer(serializers.ModelSerializer):
             'description', instance.description)
         instance.content = validated_data.get(
             'content', instance.content)
+        instance.id_name = validated_data.get('id_name', instance.id_name)
         instance.save()
         return instance
 
@@ -42,16 +43,29 @@ class TopicSerializer(serializers.ModelSerializer):
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
-        fields = ['id', 'name', 'description', 'prerequisites']
+        fields = ['name', 'card_category', 'prerequisites', 'id']
 
     def create(self, validated_data):
         return Card.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
-        instance.description = validated_data.get(
-            'description', instance.description)
+        instance.card_category = validated_data.get(
+            'card_category', instance.card_category)
         instance.prerequisites = validated_data.get(
             'prerequisites', instance.prerequisites)
+        instance.id = validated_data.get('id', instance.id_name)
         instance.save()
         return instance
+
+
+class CategorySerializer(serializers.ModelSerializer):
+
+    card_set = CardSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return CategorySerializer.objects.create(**validated_data)
