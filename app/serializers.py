@@ -60,13 +60,15 @@ class CardSerializer(serializers.ModelSerializer):
         return instance
 
 
-class CategorySerializer(serializers.ModelSerializer):
-
+class CategoryDetailSerializer(serializers.ModelSerializer):
     card_set = CardSerializer(many=True)
 
     class Meta:
         model = Category
         fields = '__all__'
 
-    def create(self, validated_data):
-        return CategorySerializer.objects.create(**validated_data)
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'

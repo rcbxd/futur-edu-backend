@@ -9,7 +9,7 @@ from rest_framework import status, generics
 from django.contrib.auth.models import User
 from app.models import Card, Category
 
-from app.serializers import CardSerializer, UserSerializer, CategorySerializer
+from app.serializers import CardSerializer, UserSerializer, CategorySerializer, CategoryDetailSerializer
 
 
 class UserList(generics.ListAPIView):
@@ -31,8 +31,7 @@ class CategoryList(generics.ListAPIView):
 def category_detail(request, pk, format=None):
     if request.method == 'GET':
         category = get_object_or_404(Category, pk=pk)
-        serializer = CategorySerializer(category)
-        print(serializer.data)
+        serializer = CategoryDetailSerializer(category)
         return Response(serializer.data)
 
 
