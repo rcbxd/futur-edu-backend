@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 
 from django.contrib.auth.models import User
-from app.models import Card
+from app.models import Card, Category
 
-from app.serializers import CardSerializer, UserSerializer
+from app.serializers import CardSerializer, UserSerializer, CategorySerializer
 
 
 class UserList(generics.ListAPIView):
@@ -20,6 +20,20 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+class CategoryList(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+@api_view(['GET'])  # code post later
+def category_detail(request, pk, format=None):
+    if request.method == 'GET':
+        category = get_object_or_404(Category, pk=pk)
+        serializer = CategorySerializer(category)
+        print(serializer.data)
+        return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])
