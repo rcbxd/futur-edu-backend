@@ -54,6 +54,8 @@ class CardSerializer(serializers.ModelSerializer):
             'card_category', instance.card_category)
         instance.prerequisites = validated_data.get(
             'prerequisites', instance.prerequisites)
+        instance.description = validated_data.get(
+            'description', instance.description)
         instance.id = validated_data.get('id', instance.id_name)
         instance.save()
         return instance
