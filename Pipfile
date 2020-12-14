@@ -8,6 +8,12 @@ verify_ssl = true
 [packages]
 django = "*"
 djangorestframework = "*"
+pillow = "*"
+django-cors-headers = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+deploy = "gunicorn --bind 0.0.0.0:8000 server.wsgi"

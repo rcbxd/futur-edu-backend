@@ -17,6 +17,7 @@ class Category(models.Model):
 
 
 class Card(models.Model):
+    image = models.ImageField(upload_to="cards")
     name = models.CharField(max_length=200)
     id = models.CharField(
         max_length=32, unique=True, default="", primary_key=True)
